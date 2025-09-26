@@ -18,20 +18,20 @@ function Pagination() {
   }, [totalBooks, limit])
 
   if (pageIndexes.length === 0) return null;
-  const windowSize = 5;
+  const windowSize = 3;
   const totalPages = pageIndexes.length;
 
   let visiblePages: number[] = [];
   if (totalPages <= 10) {
     visiblePages = pageIndexes;
   } else {
-    const start = Math.max(currentPage - 2, 1);
+    const start = Math.max(currentPage - 1, 1);
     const end = Math.min(start + windowSize - 1, totalPages);
     visiblePages = pageIndexes.slice(start - 1, end);
   }
 
   return (
-    <div className='flex gap-1'>
+    <div className='flex gap-2 justify-center'>
       {
         visiblePages.map((page) => (
           <PageBtn key={page} pageIndex={page} />
@@ -48,13 +48,15 @@ function Pagination() {
                 setCurrentPage(pageNum);
               }
             }}
+            className='flex'
           >
             <input
-              type="text"
+              type="number"
+              min={1}
               value={searchedPageIndex}
-              placeholder="..."
+              placeholder="...."
               onChange={(e) => setSearchedPageIndex(e.target.value)}
-              className="w-12 border text-center"
+              className="w-12 rounded-[1px] max-w-full border text-center focus:outline-none focus:ring-2 focus:ring-detail"
             />
           </form>
           {[totalPages - 1, totalPages].map((page) => (

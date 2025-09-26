@@ -7,7 +7,9 @@ import SvgLogo2WhiteOutlinedMin from './icons/Logo2WhiteOutlinedMin'
 
 function LoadingSymbol() {
   return (
-    <SvgLoading className="w-100 h-100 animate-spin [animation-duration:2s]"/>
+    <div className='flex justify-center items-center pt-30'>
+      <SvgLoading className="w-40 h-40 animate-spin origin-center [animation-duration:2s]"/>
+    </div>
   )
 }
 

@@ -10,6 +10,8 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { SignupFormSchema } from './formSchemas';
 import { motion, Variants } from 'motion/react';
+import Dec3 from '@/assets/images/form_dec_3.svg'
+
 
 function SignupForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -87,15 +89,15 @@ function SignupForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
 
     }
 
-    
+
     function handleToLoginBtn() {
         setExpanding(true);
     }
 
     const parentVariants: Variants = {
-        start: {width: 0, height: 0},
-        settle: {width: "auto", height: "auto", transition: {duration: 0.4}},
-        expand: {width: isExpanding ? "100vw" : 'auto', height: isExpanding ? '100vh' : 'auto', transition: {duration: 0.2}}
+        start: { width: 0, height: 0 },
+        settle: { width: "auto", height: "auto", transition: { duration: 0.4 } },
+        expand: { width: isExpanding ? "100vw" : 'auto', height: isExpanding ? '100vh' : 'auto', transition: { duration: 0.2 } }
     }
 
     const contentVariants: Variants = {
@@ -103,76 +105,85 @@ function SignupForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
         hidden: { opacity: 0, transition: { duration: 0.3 } },
     }
 
-        function animateParentVariants() {
-        if(isShrinking) return "start";
-        if(!isExpanding) return "settle";
-        else if(isExpanding) return "expand";
+    function animateParentVariants() {
+        if (isShrinking) return "start";
+        if (!isExpanding) return "settle";
+        else if (isExpanding) return "expand";
     }
 
     function animateContentVariants() {
-        if(isShrinking) return "hidden";
-        if(!isExpanding) return "visible";
+        if (isShrinking) return "hidden";
+        if (!isExpanding) return "visible";
         else if (isExpanding) return "hidden";
     }
 
 
     return (
-            <motion.div
-                ref={ref}
-                variants={parentVariants}
-                initial={"start"}
-                animate={animateParentVariants()}
-                onAnimationComplete={() => {
-                    if (isExpanding) {
-                        setTimeout(() => {
-                            router.push("/login");
-                        }, 500)
-                    }
-                    else if (isShrinking) {
-                        router.push("/");
+        <motion.div
+            ref={ref}
+            variants={parentVariants}
+            initial={"start"}
+            animate={animateParentVariants()}
+            onAnimationComplete={() => {
+                if (isExpanding) {
+                    setTimeout(() => {
+                        router.push("/login");
+                    }, 500)
                 }
-                }}
-                style={{
-                    boxShadow: shadows,
-                    transition: 'box-shadow 0.5s ease-in-out',
-                }}
-                className='relative z-2 flex flex-col bg-background text-foreground rounded-[10px] justify-center items-center'>
-                <motion.div
-                    variants={contentVariants}
-                    initial="hidden"
-                    animate={animateContentVariants()}
-                    className="flex flex-col justify-center items-center gap-5 p-2">
-                    <h4 className='font-bold'>Sign Up</h4>
-                    <form className='flex flex-col gap-y-9 w-[300px]' onSubmit={handleSubmit(onSignUp)}>
-                        <div className='flex flex-col gap-2'>
-                            <label className='pb-2'>Username</label>
+                else if (isShrinking) {
+                    router.push("/");
+                }
+            }}
+            style={{
+                boxShadow: shadows,
+                transition: 'box-shadow 0.5s ease-in-out',
+            }}
+            className='relative z-2 flex flex-col bg-background text-foreground rounded-[10px] justify-center items-center'>
+            <motion.div
+                variants={contentVariants}
+                initial="hidden"
+                animate={animateContentVariants()}
+                className="relative flex flex-col justify-center items-center gap-5 p-2">
+                <div className='relative flex flex-col justify-center items-center'>
+                    <Dec3 className="absolute z-[-1] w-50 h-20 opacity-30 bottom-8 text-foreground" />
+                    <h4 className='font-bold pt-3'>Sign Up</h4>
+                </div>
 
-                            <input {...register("username", { required: true })} type="username" placeholder="Enter your username" id='username' className='border-b border-background focus:outline-none' />
-                        </div>
+                <form className='flex flex-col gap-y-9 w-[300px]' onSubmit={handleSubmit(onSignUp)}>
+                    <div className='flex flex-col gap-2'>
+                        <label className='pb-2'>Username</label>
 
-                        <div className='flex flex-col gap-2'>
-                            <label className='pb-2'>Email</label>
+                        <input {...register("username", { required: true })} type="username" placeholder="Enter your username" id='username' className='border-b border-background focus:outline-none' />
+                    </div>
 
-                            <input {...register("email", { required: true })} type="email" placeholder="example@test.com" id='email' className='border-b border-background focus:outline-none' />
-                        </div>
+                    <div className='flex flex-col gap-2'>
+                        <label className='pb-2'>Email</label>
 
-                        <div className='flex flex-col gap-2'>
-                            <label>Password</label>
-                            <input {...register("password", { required: true })} type="password" placeholder="Enter your password" id='password' required className='border-b border-background focus:outline-none' />
-                        </div>
+                        <input {...register("email", { required: true })} type="email" placeholder="example@test.com" id='email' className='border-b border-background focus:outline-none' />
+                    </div>
 
-                        <button type='submit' className='bg-red-900 text-white cursor-pointer'>
+                    <div className='flex flex-col gap-2'>
+                        <label>Password</label>
+                        <input {...register("password", { required: true })} type="password" placeholder="Enter your password" id='password' required className='border-b border-background focus:outline-none' />
+                    </div>
+
+                    <div className='relative flex flex-col justify-center items-center'>
+                        <button type='submit' className='flex justify-center items-center bg-detail text-foreground cursor-pointer h-6 min-w-60'>
                             {
                                 isLoading ? <Loader2 className="size-4 animate-spin" />
                                     : "Login"
                             }
                         </button>
-                    </form>
-                    <div className='flex gap-2'>
-                        <p>Already have an account? </p> <button onClick={handleToLoginBtn} className='font text-red-800'>Login</button>
                     </div>
-                </motion.div>
+
+                </form>
+                <div className='flex gap-2 pb-5 justify-center items-center'>
+                    <h5 className='text-[1.2rem]'>Already have an account?</h5> <button onClick={handleToLoginBtn} className='text-detail cursor-pointer text-[1.3rem]'>Login</button>
+                </div>
+                <Dec3 className="absolute z-[-1] w-50 h-20 opacity-30 bottom-[-50px] rotate-180 text-foreground" />
+
             </motion.div>
+        </motion.div>
     )
 }
 

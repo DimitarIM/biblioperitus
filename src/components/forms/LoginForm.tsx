@@ -12,9 +12,9 @@ import z from 'zod';
 import { LoginFormSchema } from './formSchemas';
 import { useParticleContext } from "@/store/useParticleContext";
 import LogoIntro from "../LogoIntro";
-import Dec3 from '@/assets/images/dec_3.svg'
-import Dec2 from '@/assets/images/dec_2.svg'
-import Dec1 from '@/assets/images/dec_1.svg'
+import Dec3 from '@/assets/images/form_dec_3.svg'
+import Dec2 from '@/assets/images/form_dec_2.svg'
+import Dec1 from '@/assets/images/form_dec_1.svg'
 
 function LoginForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -151,16 +151,18 @@ function LoginForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
                     boxShadow: shadows,
                     transition: 'box-shadow 0.5s ease-in-out',
                 }}
-                className='relative z-2 flex flex-col bg-foreground text-background rounded-[10px] justify-center items-center'>
+                className='z-2 flex flex-col bg-foreground text-background rounded-[10px] justify-center items-center'>
                 <motion.div
                     variants={contentVariants}
                     initial="hidden"
                     animate={animateContentVariants()}
-                    className="flex flex-col justify-center items-center gap-5 p-2">
-                    <h4 className='font-bold'>Login</h4>
-                    <Dec3 className="absolute text-background w-20 h-20 opacity-[0.2] rotate-180 top-[-80px]"/>
-                    <Dec2/>
-                    <Dec1 className="w-20 h-20"/>
+                    className="relative flex flex-col justify-center items-center gap-5 p-2">
+                    <div className="relative flex flex-col justify-center items-center">
+                        <h4 className='font-bold pt-3'>Login</h4>
+                        <Dec3 className="absolute z-[-1] w-50 h-20 opacity-30 bottom-7 text-background" />
+                    </div>
+
+                    {/* <Dec3 className="absolute text-background w-20 h-20 opacity-[0.2] rotate-180 top-[-80px]"/> */}
                     <form className='flex flex-col gap-y-9 w-[300px]' onSubmit={handleSubmit(onLogin)}>
                         <div className='flex flex-col gap-2'>
                             <label className='pb-2'>Email</label>
@@ -173,16 +175,21 @@ function LoginForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
                             <input {...register("password", { required: true })} type="password" placeholder="Enter your password" id='password' required className='border-b border-background focus:outline-none' />
                         </div>
 
-                        <button type='submit' className='bg-red-900 text-white cursor-pointer'>
-                            {
-                                isLoading ? <Loader2 className="size-4 animate-spin" />
-                                    : "Login"
-                            }
-                        </button>
+                        <div className="relative flex flex-col justify-center items-center">
+                            <button type='submit' className='flex justify-center items-center bg-detail text-foreground cursor-pointer h-6 min-w-60'>
+                                {
+                                    isLoading ? <Loader2 className="size-4 animate-spin" />
+                                        : "Login"
+                                }
+                            </button>
+                        </div>
+
                     </form>
-                    <div className='flex gap-2'>
-                        <h5>Not signed in yet? </h5> <button onClick={handleToSignUpBtn} className='font text-red-800'>SignUp</button>
+                    <div className='flex justify-center items-center gap-2 pb-5'>
+                        <h5 className="text-[1.2rem]">Not signed in yet? </h5> <button onClick={handleToSignUpBtn} className='text-detail cursor-pointer text-[1.3rem]'>Sign Up</button>
+                        
                     </div>
+                        <Dec3 className="absolute z-[-1] w-50 h-20 opacity-30 bottom-[-50px] rotate-180 text-background" />
                 </motion.div>
             </motion.div>
             {/* {

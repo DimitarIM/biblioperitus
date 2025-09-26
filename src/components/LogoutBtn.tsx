@@ -15,7 +15,7 @@ function LogoutBtn() {
 
   return (
     <button onClick={handleLogout} className='flex justify-center items-center gap-2 cursor-pointer'>
-      <h5>Logout</h5>
+      <h5>Log out</h5>
       <LogOutIcon className='size-4' />
     </button>
   )

@@ -5,6 +5,9 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-detail: var(--detail);
+  --color-border-detail: var(--color-border-detail);
+  --color-nav-detail: var(--nav-detail);
+  --font-marcellus: var(--font-marcellus);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -12,9 +15,11 @@
 :root {
   --radius: 0.625rem;
   --background: rgb(5, 4, 3);
-  --foreground: rgb(255, 249, 239);
-  --detail:rgb(138, 0, 0);
-  --baseFontSize: 0.7rem;
+  --foreground: #fff9ef;
+  --border-detail: rgba(255, 249, 239, 0.132);
+  --nav-detail: rgba(5, 4, 3, 0.034);
+  --detail: #8a0000;
+  --baseFontSize: 0.9rem;
   --h5: calc(var(--baseFontSize) * 1.618);
   --h4: calc(var(--h5) * 1.618);
   --h3: calc(var(--h4) * 1.618);
@@ -22,32 +27,51 @@
   --h1: calc(var(--h2) * 1.618);
 }
 
-p {
-  font-size: var(--baseFontSize);
-}
-
-h1 {
-  font-size: var(--h1);
-}
-
-h2 {
-  font-size: var(--h2);
-}
-
-h3 {
-  font-size: var(--h3);
-}
-
-h4 {
-  font-size: var(--h4);
-}
-
-h5 {
-  font-size: var(--h5);
+@font-face {
+  font-family: "graveDigger";
+  src: url("/fonts/graveDigger.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @layer base {
+  p {
+    font-size: var(--baseFontSize);
+  }
+
+  h1 {
+    font-size: var(--h1);
+  }
+
+  h2 {
+    font-size: var(--h2);
+  }
+
+  h3 {
+    font-size: var(--h3);
+  }
+
+  h4 {
+    font-size: var(--h4);
+  }
+
+  h5 {
+    font-size: var(--h5);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    max-width: 100%;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply font-marcellus bg-background text-foreground;
   }
 }

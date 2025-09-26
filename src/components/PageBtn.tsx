@@ -9,7 +9,7 @@ function PageBtn({ pageIndex }: { pageIndex: number }) {
     const { setCurrentPage, currentPage } = ctx;
 
     return (
-        <button onClick={() => setCurrentPage(pageIndex)} className={`flex justify-center items-center ${currentPage === pageIndex ? "bg-red-800" : "bg-foreground"} text-background p-2 cursor-pointer`}>
+        <button onClick={() => setCurrentPage(pageIndex)} className={`relative rounded-[1px] z-2 flex justify-center items-center ${currentPage === pageIndex ? "bg-detail" : "bg-foreground"} text-background p-2 cursor-pointer`}>
             {pageIndex}
         </button>
     )

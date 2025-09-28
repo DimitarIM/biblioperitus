@@ -30,7 +30,8 @@ function BookGrid() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-min gap-6 w-full max-w-[1500px] h-full p-20 pt-12'>
+            className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-min gap-6 w-full max-w-[1500px] 
+            h-full p-5 sm:p-10 md:p-20 pt-12'>
             {books?.map((book, index) => (
                 <motion.div key={book.key}
                     variants={itemVariants}>

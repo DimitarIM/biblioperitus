@@ -15,7 +15,7 @@ import Noise from "@/components/effects/Noise";
 import ScrollShadowing from "@/components/effects/ScrollShadowing";
 
 export default function Home() {
-  const [activeBook, setActiveBook] = useState<Book | null>();
+  const [activeBook, setActiveBook] = useState<Book | null>(null);
 
   const bookCtx = useBookContext();
   const userCtx = useProfileContext();
@@ -38,31 +38,28 @@ export default function Home() {
     <>
       <Noise />
       <ScrollShadowing />
-      <div className="fixed bottom-0 left-0 w-full h-20 pointer-events-none 
-             bg-gradient-to-t from-black/60 to-transparent 
-             opacity-0 transition-opacity duration-300"
-        id="bottomShadow"></div>
-      <main className="relative flex flex-col min-h-screen w-screen max-w-full">
-        <DndContext
-          collisionDetection={pointerWithin}
-          onDragStart={(event) => {
-            setActiveBook(books.find((b) => b.key === event.active.id));
-            console.log("active book set");
-          }}
-          onDragEnd={(event) => {
-            const { over } = event;
-            console.log("active book dropped");
-            if (over?.id === "book_portal") {
-              if (activeBook) {
-                const activeBookId = activeBook.key.substring(activeBook.key.lastIndexOf("/") + 1);
-                addUserFavorite(activeBookId, activeBook.cover_url);
-              }
+      <DndContext
+        collisionDetection={pointerWithin}
+        onDragStart={(event) => {
+          setActiveBook(books.find((b) => b.key === event.active.id));
+          console.log("active book set");
+        }}
+        onDragEnd={(event) => {
+          const { over } = event;
+          console.log("active book dropped");
+          if (over?.id === "book_portal") {
+            if (activeBook) {
+              const activeBookId = activeBook.key.substring(activeBook.key.lastIndexOf("/") + 1);
+              addUserFavorite(activeBookId, activeBook.cover_url);
             }
-            setActiveBook(null);
-          }}
-          onDragCancel={() => setActiveBook(null)}>
-          <Navbar />
-          
+          }
+          setActiveBook(null);
+        }}
+        onDragCancel={() => setActiveBook(null)}>
+          <Navbar activeBook = {activeBook}/>
+        <main className="relative flex flex-col min-h-screen w-screen max-w-full pt-[110px]">
+
+
           <div className="z-2 flex flex-col justify-center items-center gap-3 pt-20">
 
             <form onSubmit={(e) => {
@@ -113,9 +110,8 @@ export default function Home() {
               <div className="w-10 h-10 rounded-[50%] bg-foreground"></div>
             ) : null}
           </DragOverlay>
-        </DndContext>
-      </main >
-
+        </main >
+      </DndContext>
     </>
 
 

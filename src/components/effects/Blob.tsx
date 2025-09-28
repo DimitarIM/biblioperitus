@@ -28,9 +28,9 @@ export interface BlobCursorProps {
 
 export default function BlobCursor({
   blobType = 'circle',
-  fillColor = '#5227FF',
+  fillColor = 'rgb(255, 249, 239)',
   trailCount = 3,
-  sizes = [60, 125, 75],
+  sizes = [25, 75, 25],
   innerSizes = [20, 35, 25],
   innerColor = 'rgba(255,255,255,0.8)',
   opacities = [0.6, 0.6, 0.6],
@@ -58,37 +58,37 @@ export default function BlobCursor({
   }, []);
 
   const handleMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
-      const { left, top } = updateOffset();
-      const x = 'clientX' in e ? e.clientX : e.touches[0].clientX;
-      const y = 'clientY' in e ? e.clientY : e.touches[0].clientY;
+  (e: MouseEvent | TouchEvent) => {
+    const x = 'clientX' in e ? e.clientX : e.touches[0].clientX;
+    const y = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
-      blobsRef.current.forEach((el, i) => {
-        if (!el) return;
-        const isLead = i === 0;
-        gsap.to(el, {
-          x: x - left,
-          y: y - top,
-          duration: isLead ? fastDuration : slowDuration,
-          ease: isLead ? fastEase : slowEase
-        });
+    blobsRef.current.forEach((el, i) => {
+      if (!el) return;
+      const isLead = i === 0;
+      gsap.to(el, {
+        x,
+        y,
+        duration: isLead ? fastDuration : slowDuration,
+        ease: isLead ? fastEase : slowEase
       });
-    },
-    [updateOffset, fastDuration, slowDuration, fastEase, slowEase]
-  );
+    });
+  },
+  [fastDuration, slowDuration, fastEase, slowEase]
+);
 
-  useEffect(() => {
-    const onResize = () => updateOffset();
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, [updateOffset]);
+ useEffect(() => {
+  window.addEventListener('mousemove', handleMove);
+  window.addEventListener('touchmove', handleMove);
+  return () => {
+    window.removeEventListener('mousemove', handleMove);
+    window.removeEventListener('touchmove', handleMove);
+  };
+}, [handleMove]);
 
   return (
     <div
       ref={containerRef}
-      onMouseMove={handleMove}
-      onTouchMove={handleMove}
-      className="relative top-0 left-0 w-full h-full"
+      className="fixed top-0 left-0 w-screen h-screen pointer-events-none"
       style={{ zIndex }}
     >
       {useFilter && (

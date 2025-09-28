@@ -15,7 +15,7 @@
 :root {
   --radius: 0.625rem;
   --background: rgb(5, 4, 3);
-  --foreground: #fff9ef;
+  --foreground: rgb(255, 249, 239);
   --border-detail: rgba(255, 249, 239, 0.132);
   --nav-detail: rgba(5, 4, 3, 0.034);
   --detail: #8a0000;

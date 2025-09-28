@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import axios, { isAxiosError } from 'axios';
 import { authClient } from '@/lib/auth/auth-client';
-import { BiblioUser, Book } from '@/types/types';
+import { BiblioUser } from '@/types/types';
 import { redirect } from 'next/navigation';
 
 interface ProfileContextType {

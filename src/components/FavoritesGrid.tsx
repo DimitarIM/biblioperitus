@@ -27,7 +27,7 @@ function FavoritesGrid() {
     <motion.div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-min gap-6 w-full max-w-[1500px] h-full p-20 pt-12'>
       {
         biblioUser?.favoriteBooks?.map((favoriteBook, index) => (
-          <motion.div key={favoriteBook.key}
+          <motion.div key={favoriteBook.favoriteKey}
             variants={itemVariants}>
             <FavoriteBookCard key={index} favoriteBook={favoriteBook} />
           </motion.div>

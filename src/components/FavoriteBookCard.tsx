@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 
 function FavoriteBookCard({ favoriteBook }: { favoriteBook: FavoriteBook }) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
-    id: favoriteBook.key,
+    id: favoriteBook.favoriteKey,
   })
 
   const [clickOrigin, setClickOrigin] = useState("center center");

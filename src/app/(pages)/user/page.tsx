@@ -25,7 +25,7 @@ function UserProfile() {
         collisionDetection={pointerWithin}
         onDragStart={(event) => {
           if (biblioUser?.favoriteBooks) {
-            setActiveBook(biblioUser?.favoriteBooks?.find((b) => b.key === event.active.id) ?? null);
+            setActiveBook(biblioUser?.favoriteBooks?.find((b) => b.favoriteKey === event.active.id) ?? null);
           }
           console.log("active book set");
         }}
@@ -34,7 +34,7 @@ function UserProfile() {
           console.log("active book dropped");
           if (over?.id === "book_portal") {
             if (activeBook) {
-              const activeBookId = activeBook.key.substring(activeBook.key.lastIndexOf("/") + 1);
+              const activeBookId = activeBook.favoriteKey.substring(activeBook.favoriteKey.lastIndexOf("/") + 1);
               removeUserFavorite(activeBookId);
               getUserInfo();
             }

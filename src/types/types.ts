@@ -17,7 +17,7 @@ export type Book = {
 export type FavoriteBook  = {
     description: string,
     cover_url?: string,
-    key: string,
+    favoriteKey: string,
     authors: Author[],
     title: string,
     subjects: string[],

@@ -1,3 +1,5 @@
+import { FavoriteBook } from "@/types/types";
+
 export async function fetchBooks(title: string, page: number, limit: number) {
     console.log("api page number", page);
     const response =
@@ -16,8 +18,8 @@ export async function fetchBook(bookId: string, cover_url:string) {
     }
     try {
         const { description, key, authors, title, subjects } = await response.json();
-        const keySubStr = key.substring(key.lastIndexOf("/") + 1);
-        return { description, cover_url, keySubStr, authors, title, subjects }
+        const favoriteKey = key.substring(key.lastIndexOf("/") + 1);
+        return { description, cover_url, favoriteKey, authors, title, subjects } as FavoriteBook
     } catch (err) {
         console.error(`Invalid JSON for book ${bookId}:`, err);
         return undefined;

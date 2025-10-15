@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
-import Portal from '@/assets/images/book_portal.svg'
 import Portal2 from '@/assets/images/book_portal2.svg'
-import { useDraggable, useDroppable } from '@dnd-kit/core'
+import {useDroppable } from '@dnd-kit/core'
 
 
 function BookPortal() {

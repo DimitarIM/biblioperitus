@@ -4,12 +4,12 @@ import BookGrid from "@/components/BookGrid";
 import LoadingSymbol from "@/components/LoadingSymbol";
 import Navbar from "@/components/Navbar";
 import Pagination from "@/components/Pagination";
-import { useBookContext } from "@/store/useBookContext";
+import { useBookContext } from "@/context/useBookContext";
 import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
 import { snapCenterToCursor } from "@dnd-kit/modifiers";
 import { Book } from "@/types/types";
-import { useProfileContext } from "@/store/useProfileContext";
+import { useProfileContext } from "@/context/useProfileContext";
 import HomeDec1 from "@/assets/images/home_dec_1.svg"
 import Noise from "@/components/effects/Noise";
 import ScrollShadowing from "@/components/effects/ScrollShadowing";
@@ -19,8 +19,8 @@ export default function Home() {
 
   const bookCtx = useBookContext();
   const userCtx = useProfileContext();
-  if (!bookCtx || !userCtx) return null;
-  const { isLoading, books, setBooks, fetchBooks, searchTerm, setSearchTerm, setCurrentPage, currentPage, totalBooks, limit } = bookCtx;
+
+  const { isLoading, books, fetchBooks, searchTerm, setSearchTerm, setCurrentPage, currentPage, totalBooks, limit } = bookCtx;
   const { addUserFavorite, getUserInfo, biblioUser } = userCtx;
 
 
@@ -29,7 +29,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    console.log("clinet page:", currentPage);
+    console.log("client page:", currentPage);
     if (currentPage === 0) return;
     fetchBooks();
   }, [currentPage]);
@@ -41,7 +41,7 @@ export default function Home() {
       <DndContext
         collisionDetection={pointerWithin}
         onDragStart={(event) => {
-          setActiveBook(books.find((b) => b.key === event.active.id));
+          setActiveBook(books.find((b) => b.key === event.active.id) as Book | null);
           console.log("active book set");
         }}
         onDragEnd={(event) => {

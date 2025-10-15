@@ -5,6 +5,7 @@ export interface BiblioUser extends User {
 }
 
 export type Book = {
+    id: string,
     author_key:string[],
     author_name:string[],
     cover_i: number,

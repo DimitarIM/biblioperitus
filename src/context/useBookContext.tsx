@@ -1,8 +1,9 @@
 'use client'
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import React, { createContext, useCallback, useContext, useState } from 'react'
 import axios from "axios"
 import { redirect } from 'next/navigation';
+import { Book } from '@/types/types';
 
 interface BookContextType {
     isLoading: boolean,
@@ -20,13 +21,13 @@ interface BookContextType {
     limit: number,
     setLimit: (value:number) => void,
 
-    books: any[],
-    setBooks: (value: any[]) => void,
+    books: Book[],
+    setBooks: (value: Book[]) => void,
 
     fetchBooks: () => void,
 }
 
-const BookContext = createContext<BookContextType | null>(null);
+const BookContext = createContext<BookContextType>(null!);
 
 export const BookContextProvider = ({ children }: { children: React.ReactNode }) => {
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -37,22 +38,22 @@ export const BookContextProvider = ({ children }: { children: React.ReactNode })
     const [limit, setLimit] = useState<number>(10);
 
     const [isLoading, setLoading] = useState<boolean>(false);
-    const [books, setBooks] = useState<any[]>([]);
+    const [books, setBooks] = useState<Book[]>([]);
 
     const fetchBooks = useCallback(async () => {
         try {
             setLoading(true);
-            console.log("Is loading")
+            console.log("It's loading")
             const response = await axios.get(`${BASE_URL}/api/books?title=${searchTerm}&page=${currentPage}&limit=${limit}`, { withCredentials: true });
             setTotalBooks(response.data.numFound);
             setBooks(response.data.booksWithCovers);
             
-        } catch (err: any) {
+        } catch (err) {
             if (axios.isAxiosError(err)) {
                 console.log("Axios Error: ", err.response?.status);
                 if (err.response?.status === 401) redirect("/login");
             }
-            else console.log("Error: ", err.message);
+            else if(err instanceof Error) console.log("Error: ", err.message);
         } finally {
             setLoading(false);
         }

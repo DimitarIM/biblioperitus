@@ -3,7 +3,7 @@
 import SignupForm from "@/components/forms/SignupForm"
 import ParticleProvider from "@/components/effects/ParticleProvider"
 import { useRef } from "react";
-import { ParticleContextProvider } from "@/store/useParticleContext";
+import { ParticleContextProvider } from "@/context/useParticleContext";
 import BlobCursor from "@/components/effects/Blob";
 
 export default function SignUpPage() {

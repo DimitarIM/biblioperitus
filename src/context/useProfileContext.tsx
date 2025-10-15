@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import axios, { isAxiosError } from 'axios';
+import axios from 'axios';
 import { authClient } from '@/lib/auth/auth-client';
 import { BiblioUser } from '@/types/types';
 import { redirect } from 'next/navigation';
@@ -19,7 +19,7 @@ interface ProfileContextType {
   removeUserFavorite: (value:string) => void;
 }
 
-const ProfileContext = createContext<ProfileContextType | null>(null);
+const ProfileContext = createContext<ProfileContextType>(null!);
 
 
 export const ProfileContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -50,7 +50,7 @@ export const ProfileContextProvider = ({ children }: { children: React.ReactNode
     }
   }
 
-  const getUserFavoriteBooks = (): Record<string, any> => {
+  const getUserFavoriteBooks = () => {
     if (!biblioUser?.favoriteBooks) return [];
     return biblioUser.favoriteBooks;
   }
@@ -59,12 +59,12 @@ export const ProfileContextProvider = ({ children }: { children: React.ReactNode
     try {
       await axios.post(`${BASE_URL}/api/user`, { bookId: droppedBookId, coverUrl: droppedCoverUrl });
       console.log("Book added successfully!!!!!!")
-    } catch (err: any) {
+    } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("Axios Error: ", err.response?.status);
         if (err.response?.status === 401) redirect("/login");
       }
-      else console.log("Error: ", err.message);
+      else if(err instanceof Error)console.log("Error: ", err.message);
     }
   }
 
@@ -75,12 +75,12 @@ export const ProfileContextProvider = ({ children }: { children: React.ReactNode
         bookId: droppedBookId,
       } });
       console.log("Book deleted successfully!!!!!!")
-    } catch (err: any) {
+    } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("Axios Error: ", err.response?.status);
         if (err.response?.status === 401) redirect("/login");
       }
-      else console.log("Error: ", err.message);
+      else if(err instanceof Error)console.log("Error: ", err.message);
     }
   }
 

@@ -1,20 +1,18 @@
 'use client'
-import BlobCursor from '@/components/effects/Blob'
 import FavoritesGrid from '@/components/FavoritesGrid'
 import LoadingSymbol from '@/components/LoadingSymbol'
 import Navbar from '@/components/Navbar'
 import UserInfoBox from '@/components/UserInfoBox'
-import { useProfileContext } from '@/store/useProfileContext'
+import { useProfileContext } from '@/context/useProfileContext'
 import { FavoriteBook } from '@/types/types'
 import { DndContext, DragOverlay, pointerWithin } from '@dnd-kit/core'
 import { snapCenterToCursor } from '@dnd-kit/modifiers'
 import React, { useEffect, useState } from 'react'
 
-function userProfile() {
+function UserProfile() {
   const [activeBook, setActiveBook] = useState<FavoriteBook | null>(null);
 
   const ctx = useProfileContext();
-  if (!ctx) return <div>Loading</div>
 
   const { isLoading, getUserInfo, removeUserFavorite, biblioUser } = ctx;
   useEffect(() => {
@@ -46,7 +44,6 @@ function userProfile() {
         }}
         onDragCancel={() => setActiveBook(null)}>
         <Navbar activeBook={activeBook} />
-        {/* <BlobCursor /> */}
         <main className="flex flex-col justify-center items-center min-h-screen max-w-screen pt-[120px]">
           <UserInfoBox />
           {
@@ -65,4 +62,4 @@ function userProfile() {
   )
 }
 
-export default userProfile
+export default UserProfile

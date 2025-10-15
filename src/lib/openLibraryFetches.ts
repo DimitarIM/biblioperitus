@@ -15,8 +15,8 @@ export async function fetchBook(bookId: string, cover_url:string) {
         console.error(`fetching book failed with id ${bookId} status: `, response.status);
     }
     try {
-        let { description, key, authors, title, subjects } = await response.json();
-        key = key.substring(key.lastIndexOf("/") + 1);
+        const { description, key, authors, title, subjects } = await response.json();
+        let keySubStr = key.substring(key.lastIndexOf("/") + 1);
         return { description, cover_url, key, authors, title, subjects }
     } catch (err) {
         console.error(`Invalid JSON for book ${bookId}:`, err);
@@ -50,7 +50,7 @@ export async function fetchAuthor(id: number) {
             return undefined;
         }
 
-        let { name, bio, personal_name, photos, birth_date, death_date } = await response.json();
+        const { name, bio, personal_name, photos, birth_date, death_date } = await response.json();
         return { name, bio, photos, birth_date, death_date }
     } catch (error) {
         console.log("Error fetching: ", error);

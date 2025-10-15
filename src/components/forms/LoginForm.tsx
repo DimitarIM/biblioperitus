@@ -10,20 +10,16 @@ import React, { useEffect, useState, RefObject } from 'react'
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { LoginFormSchema } from './formSchemas';
-import { useParticleContext } from "@/store/useParticleContext";
-import LogoIntro from "../LogoIntro";
+import { useParticleContext } from "@/context/useParticleContext";
 import Dec3 from '@/assets/images/form_dec_3.svg'
-import Dec2 from '@/assets/images/form_dec_2.svg'
-import Dec1 from '@/assets/images/form_dec_1.svg'
 
 function LoginForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isExpanding, setExpanding] = useState<boolean>(false);
     const [isShrinking, setShrinking] = useState<boolean>(false);
-    const [isShrunk, setShrunk] = useState<boolean>(true);
+    // const [isShrunk, setShrunk] = useState<boolean>(true);
 
     const ctx = useParticleContext();
-    if (!ctx) return null;
     const { setClearCanvasState, clearCanvasState } = ctx;
 
     const shadowColor = "rgb(255, 249, 239)";

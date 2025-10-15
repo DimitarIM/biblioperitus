@@ -1,6 +1,5 @@
-import { useProfileContext } from '@/store/useProfileContext'
-import React, { useEffect } from 'react'
-import BookCard from './BookCard';
+import { useProfileContext } from '@/context/useProfileContext'
+import React from 'react'
 
 function UserInfoBox() {
   const ctx = useProfileContext();

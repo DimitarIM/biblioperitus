@@ -3,7 +3,7 @@
 import LoginForm from "@/components/forms/LoginForm"
 import ParticleProvider from "@/components/effects/ParticleProvider"
 import { useRef } from "react"
-import { ParticleContextProvider } from "@/store/useParticleContext";
+import { ParticleContextProvider } from "@/context/useParticleContext";
 
 
 export default function LoginPage() {

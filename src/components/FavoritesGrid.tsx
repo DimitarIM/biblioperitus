@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useProfileContext } from '@/store/useProfileContext'
+import { useProfileContext } from '@/context/useProfileContext'
 import FavoriteBookCard from './FavoriteBookCard';
 import { motion } from 'motion/react';
 
 function FavoritesGrid() {
   const ctx = useProfileContext();
-  if (!ctx) return <p>Loading...</p>;
   const { biblioUser } = ctx;
-  useEffect(() => {
-    console.log(biblioUser?.favoriteBooks);
-  }, [biblioUser]);
 
   const containerVariants = {
     hidden: { opacity: 0 },

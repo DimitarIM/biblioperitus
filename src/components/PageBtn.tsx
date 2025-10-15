@@ -1,6 +1,6 @@
 'use client'
 
-import { useBookContext } from '@/store/useBookContext';
+import { useBookContext } from '@/context/useBookContext';
 import React, { useEffect } from 'react'
 
 function PageBtn({ pageIndex }: { pageIndex: number }) {

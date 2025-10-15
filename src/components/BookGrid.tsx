@@ -1,11 +1,10 @@
-import { useBookContext } from '@/store/useBookContext';
-import React, { useEffect } from 'react'
+import { useBookContext } from '@/context/useBookContext';
+import React from 'react'
 import BookCard from './BookCard';
 import { motion } from 'motion/react';
 
 function BookGrid() {
     const ctx = useBookContext();
-    if (!ctx) return <p>Loading...</p>;
 
     const { books } = ctx;
 

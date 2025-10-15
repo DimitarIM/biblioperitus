@@ -1,6 +1,6 @@
 'use client'
 
-import { useBookContext } from '@/store/useBookContext';
+import { useBookContext } from '@/context/useBookContext';
 import PageBtn from './PageBtn';
 import { useEffect, useState } from 'react';
 
@@ -10,7 +10,7 @@ function Pagination() {
 
 
   const ctx = useBookContext();
-  if (!ctx) return null;
+  if (!ctx) return <div>Loading...</div>;
   const { totalBooks, limit, setCurrentPage, currentPage } = ctx;
 
   useEffect(() => {

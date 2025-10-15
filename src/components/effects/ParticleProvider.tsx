@@ -2,11 +2,10 @@
 
 import { RefObject, useEffect, useRef } from "react";
 import { Particle } from "./particle";
-import { useParticleContext } from "@/store/useParticleContext";
+import { useParticleContext } from "@/context/useParticleContext";
 
 export default function ParticleProvider({ targetRef, color }: { targetRef?: RefObject<HTMLDivElement | null>, color: string }) {
     const ctx = useParticleContext();
-    if (!ctx) return null;
     const { clearCanvasState } = ctx;
 
     const canvasRef = useRef<HTMLCanvasElement>(null);

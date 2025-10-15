@@ -10,7 +10,6 @@ function Pagination() {
 
 
   const ctx = useBookContext();
-  if (!ctx) return <div>Loading...</div>;
   const { totalBooks, limit, setCurrentPage, currentPage } = ctx;
 
   useEffect(() => {

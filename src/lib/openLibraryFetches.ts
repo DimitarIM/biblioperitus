@@ -16,8 +16,8 @@ export async function fetchBook(bookId: string, cover_url:string) {
     }
     try {
         const { description, key, authors, title, subjects } = await response.json();
-        let keySubStr = key.substring(key.lastIndexOf("/") + 1);
-        return { description, cover_url, key, authors, title, subjects }
+        const keySubStr = key.substring(key.lastIndexOf("/") + 1);
+        return { description, cover_url, keySubStr, authors, title, subjects }
     } catch (err) {
         console.error(`Invalid JSON for book ${bookId}:`, err);
         return undefined;

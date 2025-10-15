@@ -171,7 +171,7 @@ function SignupForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
                         <button type='submit' className='flex justify-center items-center bg-detail text-foreground cursor-pointer h-6 min-w-60'>
                             {
                                 isLoading ? <Loader2 className="size-4 animate-spin" />
-                                    : "Login"
+                                    : "Sign Up"
                             }
                         </button>
                     </div>

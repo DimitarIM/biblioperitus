@@ -3,6 +3,24 @@ import { NextResponse } from "next/server";
 import { fetchBooks, fetchCover } from "@/lib/openLibraryFetches";
 import { Book } from "@/types/types";
 
+const ALLOWED_ORIGIN =
+    process.env.NODE_ENV === 'production'
+        ? 'https://app.example'
+        : '*';
+
+export async function OPTIONS() {
+    return new Response(null, {
+        status: 200,
+        headers: {
+            'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+            'Access-Control-Allow-Methods': 'GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            'Access-Control-Allow-Credentials': 'true',
+        },
+    });
+}
+
+
 export async function GET(req: Request) {
 
     const session = await verifySession();
@@ -14,11 +32,11 @@ export async function GET(req: Request) {
     const limit = parseInt(searchParams.get("limit") || "10");
 
     const data = await fetchBooks(title, page, limit);
-    const books:Book[] = data.docs;
+    const books: Book[] = data.docs;
     const numFound = data.numFound;
-    
+
     // let booksWithCovers = books.filter(books => books.cover_i);
-    
+
     const booksWithCovers = await Promise.all(
         books.map(async (book) => {
             return {
@@ -27,5 +45,7 @@ export async function GET(req: Request) {
             };
         })
     );
-    return NextResponse.json({ booksWithCovers, numFound });
+    return NextResponse.json({ booksWithCovers, numFound }, {
+        headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN },
+    });
 }

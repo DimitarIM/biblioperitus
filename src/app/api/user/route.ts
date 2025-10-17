@@ -5,6 +5,24 @@ import { verifySession } from "@/lib/auth/dal";
 import { fetchBook } from "@/lib/openLibraryFetches";
 import { FavoriteBook } from "@/types/types";
 
+const ALLOWED_ORIGIN =
+  process.env.NODE_ENV === 'production'
+    ? 'https://app.example'
+    : '*';
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+  });
+}
+
+
 export async function GET(req: NextRequest) {
     try {
         const checkedSession = await verifySession();
@@ -35,7 +53,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json(
             { message: "Favorite Books Fetched!", success: true, data: favoriteBooks },
-            { status: 200 })
+            { status: 200 },)
     } catch (err) {
           console.error("User GET failure: ", err);
         return NextResponse.json(

@@ -7,6 +7,10 @@ dotenv.config();
 const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
 export const auth = betterAuth({
+    trustedOrigins: [
+    'http://localhost:3000',
+    'https://biblioperitus-5jq13733c-dimitarims-projects.vercel.app'
+    ],
     database: new Pool({
         connectionString: `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`
     }),

@@ -54,7 +54,6 @@ export class Particle {
     }
 
     update(componentRect: DOMRect, clearCanvasState: boolean) {
-        console.log(clearCanvasState);
         if (clearCanvasState) {
             this.size -= 1;
             if (this.size < 0) this.size = 0;

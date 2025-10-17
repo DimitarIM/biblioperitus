@@ -74,7 +74,7 @@ function LoginForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
         });
     };
 
-    const { register, handleSubmit } = useForm<z.infer<typeof LoginFormSchema>>({
+    const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof LoginFormSchema>>({
         resolver: zodResolver(LoginFormSchema),
         defaultValues: {
             email: "",
@@ -125,75 +125,75 @@ function LoginForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
     }
 
     return (
-        <>
+
+        <motion.div
+            ref={ref}
+            variants={parentVariants}
+            initial={"start"}
+            animate={animateParentVariants()}
+            onAnimationComplete={() => {
+                if (isExpanding) {
+                    setTimeout(() => {
+                        router.push("/signUp");
+                    }, 600)
+                }
+                else if (isShrinking) {
+                    setTimeout(() => {
+                        router.push("/");
+                    }, 500)
+                }
+            }}
+            style={{
+                boxShadow: shadows,
+                transition: 'box-shadow 0.5s ease-in-out',
+            }}
+            className='z-2 flex flex-col bg-foreground text-background rounded-[10px] justify-center items-center'>
             <motion.div
-                ref={ref}
-                variants={parentVariants}
-                initial={"start"}
-                animate={animateParentVariants()}
-                onAnimationComplete={() => {
-                    if (isExpanding) {
-                        setTimeout(() => {
-                            router.push("/signUp");
-                        }, 600)
-                    }
-                    else if (isShrinking) {
-                        setTimeout(() => {
-                            router.push("/");
-                        }, 500)
-                    }
-                }}
-                style={{
-                    boxShadow: shadows,
-                    transition: 'box-shadow 0.5s ease-in-out',
-                }}
-                className='z-2 flex flex-col bg-foreground text-background rounded-[10px] justify-center items-center'>
-                <motion.div
-                    variants={contentVariants}
-                    initial="hidden"
-                    animate={animateContentVariants()}
-                    className="relative flex flex-col justify-center items-center gap-5 p-2">
+                variants={contentVariants}
+                initial="hidden"
+                animate={animateContentVariants()}
+                className="relative flex flex-col justify-center items-center gap-5 p-2">
+                <div className="relative flex flex-col justify-center items-center">
+                    <h4 className='font-bold pt-3'>Login</h4>
+                    <Dec3 className="absolute z-[-1] w-50 h-20 opacity-30 bottom-7 text-background" />
+                </div>
+
+                {/* <Dec3 className="absolute text-background w-20 h-20 opacity-[0.2] rotate-180 top-[-80px]"/> */}
+                <form className='flex flex-col gap-y-9 w-[300px]' onSubmit={handleSubmit(onLogin)}>
+                    <div className='flex flex-col gap-2'>
+                        <label className='pb-2'>Email</label>
+
+                        <input {...register("email", { required: true })} type="email" placeholder="example@test.com" id='email' className='border-b border-background focus:outline-none' />
+                        {
+                            errors.email && <p className='text-detail'>{errors.email.message}</p>
+                        }
+                    </div>
+
+                    <div className='flex flex-col gap-2'>
+                        <label>Password</label>
+                        <input {...register("password", { required: true })} type="password" placeholder="Enter your password" id='password' required className='border-b border-background focus:outline-none' />
+                        {
+                            errors.password && <p className='text-detail'>{errors.password.message}</p>
+                        }
+                    </div>
+
                     <div className="relative flex flex-col justify-center items-center">
-                        <h4 className='font-bold pt-3'>Login</h4>
-                        <Dec3 className="absolute z-[-1] w-50 h-20 opacity-30 bottom-7 text-background" />
+                        <button type='submit' className='flex justify-center items-center bg-detail text-foreground cursor-pointer h-6 min-w-60'>
+                            {
+                                isLoading ? <Loader2 className="size-4 animate-spin" />
+                                    : "Login"
+                            }
+                        </button>
                     </div>
 
-                    {/* <Dec3 className="absolute text-background w-20 h-20 opacity-[0.2] rotate-180 top-[-80px]"/> */}
-                    <form className='flex flex-col gap-y-9 w-[300px]' onSubmit={handleSubmit(onLogin)}>
-                        <div className='flex flex-col gap-2'>
-                            <label className='pb-2'>Email</label>
+                </form>
+                <div className='flex justify-center items-center gap-2 pb-5'>
+                    <h5 className="text-[1.2rem]">Not signed in yet? </h5> <button onClick={handleToSignUpBtn} className='text-detail cursor-pointer text-[1.3rem]'>Sign Up</button>
 
-                            <input {...register("email", { required: true })} type="email" placeholder="example@test.com" id='email' className='border-b border-background focus:outline-none' />
-                        </div>
-
-                        <div className='flex flex-col gap-2'>
-                            <label>Password</label>
-                            <input {...register("password", { required: true })} type="password" placeholder="Enter your password" id='password' required className='border-b border-background focus:outline-none' />
-                        </div>
-
-                        <div className="relative flex flex-col justify-center items-center">
-                            <button type='submit' className='flex justify-center items-center bg-detail text-foreground cursor-pointer h-6 min-w-60'>
-                                {
-                                    isLoading ? <Loader2 className="size-4 animate-spin" />
-                                        : "Login"
-                                }
-                            </button>
-                        </div>
-
-                    </form>
-                    <div className='flex justify-center items-center gap-2 pb-5'>
-                        <h5 className="text-[1.2rem]">Not signed in yet? </h5> <button onClick={handleToSignUpBtn} className='text-detail cursor-pointer text-[1.3rem]'>Sign Up</button>
-                        
-                    </div>
-                        <Dec3 className="absolute z-[-1] w-50 h-20 opacity-30 bottom-[-50px] rotate-180 text-background" />
-                </motion.div>
+                </div>
+                <Dec3 className="absolute z-[-1] w-50 h-20 opacity-30 bottom-[-50px] rotate-180 text-background" />
             </motion.div>
-            {/* {
-                isShrunk && <LogoIntro bg="background"/>
-            } */}
-        </>
-
-
+        </motion.div>
     )
 }
 

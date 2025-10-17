@@ -66,15 +66,17 @@ function SignupForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
         });
     };
 
-    const { register, handleSubmit } = useForm<z.infer<typeof SignupFormSchema>>({
+    const { register, handleSubmit, formState: {errors} } = useForm<z.infer<typeof SignupFormSchema>>({
         resolver: zodResolver(SignupFormSchema),
         defaultValues: {
+            username: "",
             email: "",
             password: "",
         },
     })
 
     async function onSignUp(values: z.infer<typeof SignupFormSchema>) {
+        console.log("button pressed");
         setIsLoading(true);
         const { success, message } = await signUp(values.username, values.email, values.password);
 
@@ -149,22 +151,33 @@ function SignupForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
                     <h4 className='font-bold pt-3'>Sign Up</h4>
                 </div>
 
-                <form className='flex flex-col gap-y-9 w-[300px]' onSubmit={handleSubmit(onSignUp)}>
+                <form className='flex flex-col gap-y-9 w-[300px]' onSubmit={handleSubmit(onSignUp, (err) => {
+                    console.log("Validation errors:", err);
+                })}>
                     <div className='flex flex-col gap-2'>
                         <label className='pb-2'>Username</label>
 
-                        <input {...register("username", { required: true })} type="username" placeholder="Enter your username" id='username' className='border-b border-background focus:outline-none' />
+                        <input {...register("username", { required: true })} type="text" placeholder="Enter your username" id='username' className='border-b border-background focus:outline-none' />
+                        {
+                            errors.username && <p className='text-detail'>{errors.username.message}</p>
+                        }
                     </div>
 
                     <div className='flex flex-col gap-2'>
                         <label className='pb-2'>Email</label>
 
                         <input {...register("email", { required: true })} type="email" placeholder="example@test.com" id='email' className='border-b border-background focus:outline-none' />
+                        {
+                            errors.email && <p className='text-detail'>{errors.email.message}</p>
+                        }
                     </div>
 
                     <div className='flex flex-col gap-2'>
                         <label>Password</label>
                         <input {...register("password", { required: true })} type="password" placeholder="Enter your password" id='password' required className='border-b border-background focus:outline-none' />
+                        {
+                            errors.password && <p className='text-detail'>{errors.password.message}</p>
+                        }
                     </div>
 
                     <div className='relative flex flex-col justify-center items-center'>
@@ -175,7 +188,6 @@ function SignupForm({ ref }: { ref: RefObject<HTMLDivElement | null> }) {
                             }
                         </button>
                     </div>
-
                 </form>
                 <div className='flex gap-2 pb-5 justify-center items-center'>
                     <h5 className='text-[1.2rem]'>Already have an account?</h5> <button onClick={handleToLoginBtn} className='text-detail cursor-pointer text-[1.3rem]'>Login</button>

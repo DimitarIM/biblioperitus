@@ -9,7 +9,7 @@ const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_
 export const auth = betterAuth({
     trustedOrigins: [
     'http://localhost:3000',
-    'https://biblioperitus-5jq13733c-dimitarims-projects.vercel.app'
+    'https://biblioperitus.vercel.app'
     ],
     database: new Pool({
         connectionString: `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`

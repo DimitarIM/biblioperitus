@@ -30,7 +30,6 @@ interface BookContextType {
 const BookContext = createContext<BookContextType>(null!);
 
 export const BookContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(0);
@@ -44,7 +43,7 @@ export const BookContextProvider = ({ children }: { children: React.ReactNode })
         try {
             setLoading(true);
             console.log("It's loading")
-            const response = await axios.get(`${BASE_URL}/api/books?title=${searchTerm}&page=${currentPage}&limit=${limit}`, { withCredentials: true });
+            const response = await axios.get(`/api/books?title=${searchTerm}&page=${currentPage}&limit=${limit}`, { withCredentials: true });
             setTotalBooks(response.data.numFound);
             setBooks(response.data.booksWithCovers);
             
@@ -57,7 +56,7 @@ export const BookContextProvider = ({ children }: { children: React.ReactNode })
         } finally {
             setLoading(false);
         }
-    },[BASE_URL, searchTerm, currentPage, limit])
+    },[searchTerm, currentPage, limit])
 
     return (
         <BookContext.Provider value={{ isLoading, setLoading, searchTerm, setSearchTerm, currentPage, setCurrentPage, limit, setLimit, books, setBooks, totalBooks, setTotalBooks, fetchBooks }}>

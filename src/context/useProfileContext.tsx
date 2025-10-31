@@ -23,9 +23,6 @@ const ProfileContext = createContext<ProfileContextType>(null!);
 
 
 export const ProfileContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-  console.log(BASE_URL);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [biblioUser, setBiblioUser] = useState<BiblioUser>();
 
@@ -39,7 +36,7 @@ export const ProfileContextProvider = ({ children }: { children: React.ReactNode
       const session = await authClient.getSession();
       const userInfo = (session.data?.user) as BiblioUser;
 
-      const response = await axios.get(`${BASE_URL}/api/user`);
+      const response = await axios.get(`/api/user`);
       userInfo.favoriteBooks = response.data.data;
       if (!userInfo) return;
       setBiblioUser(userInfo);
@@ -58,7 +55,7 @@ export const ProfileContextProvider = ({ children }: { children: React.ReactNode
 
   const addUserFavorite = async (droppedBookId:string, droppedCoverUrl:string | undefined) => {
     try {
-      await axios.post(`${BASE_URL}/api/user`, { bookId: droppedBookId, coverUrl: droppedCoverUrl });
+      await axios.post(`$/api/user`, { bookId: droppedBookId, coverUrl: droppedCoverUrl });
       console.log("Book added successfully!!!!!!")
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -72,7 +69,7 @@ export const ProfileContextProvider = ({ children }: { children: React.ReactNode
   const removeUserFavorite = async (droppedBookId:string) => {
     try {
       setLoading(true);
-      await axios.delete(`${BASE_URL}/api/user`, { data: {
+      await axios.delete(`/api/user`, { data: {
         bookId: droppedBookId,
       } });
       console.log("Book deleted successfully!!!!!!")

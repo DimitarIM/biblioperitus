@@ -25,6 +25,7 @@ const ProfileContext = createContext<ProfileContextType>(null!);
 export const ProfileContextProvider = ({ children }: { children: React.ReactNode }) => {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+  console.log(BASE_URL);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [biblioUser, setBiblioUser] = useState<BiblioUser>();
 

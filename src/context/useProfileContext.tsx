@@ -55,7 +55,7 @@ export const ProfileContextProvider = ({ children }: { children: React.ReactNode
 
   const addUserFavorite = async (droppedBookId:string, droppedCoverUrl:string | undefined) => {
     try {
-      await axios.post(`$/api/user`, { bookId: droppedBookId, coverUrl: droppedCoverUrl });
+      await axios.post(`/api/user`, { bookId: droppedBookId, coverUrl: droppedCoverUrl });
       console.log("Book added successfully!!!!!!")
     } catch (err) {
       if (axios.isAxiosError(err)) {
